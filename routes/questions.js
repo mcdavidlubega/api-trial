@@ -20,7 +20,23 @@ const questions = [
     description: 'This is a description of question 3',
   },
 ];
-
+const answers = [
+  {
+    id: 1,
+    questionId: 1,
+    answer: 'This is the answer to question 1',
+  },
+  {
+    id: 2,
+    questionId: 2,
+    answer: 'This is the answer to question 2',
+  },
+  {
+    id: 3,
+    questionId: 2,
+    answer: 'This is the answer to question 3',
+  },
+];
 // Get All Questions
 router.get('/', (req, res) => {
   if (questions.length < 1)
@@ -89,6 +105,41 @@ router.delete('/:id', (req, res) => {
     questions.splice(indexOfQuestion, 1);
     res.status(201).json({ message: 'Question deleted' });
   }
+});
+
+/*
+ *  Answers Routes
+ */
+
+// Add an answer
+router.post(
+  '/:id/answers',
+  celebrate({
+    [Segments.BODY]: Joi.object().keys({
+      questionId: Joi.number().required(),
+      answer: Joi.string().min(5).required(),
+    }),
+  }),
+  (req, res) => {
+    // const { questionId, answer } = req.body;
+    const newAnswer = {
+      id: answers.length + 1,
+      questionId: req.body.questionId,
+      answer: req.body.answer,
+    };
+    answers.push(newAnswer);
+    res.status(201).json(answers);
+  }
+);
+
+// Getting a specific answer
+router.get('/:id/answers/', (req, res) => {
+  const getAnswer = answers.filter(
+    (a) => a.questionId === parseInt(req.params.id, 10)
+  );
+  if (!getAnswer)
+    res.status(400).json({ message: 'There is no answer for this question' });
+  if (getAnswer) res.status(201).json(getAnswer);
 });
 
 module.exports = router;

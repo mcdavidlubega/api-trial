@@ -1,7 +1,6 @@
 const express = require('express');
 const { errors } = require('celebrate');
 const questions = require('./routes/questions');
-const answers = require('./routes/answers');
 const home = require('./routes/home');
 
 const app = express();
