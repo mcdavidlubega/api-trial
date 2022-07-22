@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:coveralls": "jest --coverage && coveralls < coverage/lcov.info",
     "start": "babel-node index.js"
   },
   "keywords": [],
@@ -21,8 +23,8 @@
     "nodemon": "^2.0.19"
   },
   "devDependencies": {
-    
     "@types/supertest": "^2.0.12",
+    "coveralls": "^3.1.1",
     "eslint": "^8.19.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-node": "^4.1.0",
