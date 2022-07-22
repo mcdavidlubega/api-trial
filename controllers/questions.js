@@ -36,16 +36,15 @@ const answers = [
 class controller {
   static getQuestions = (req, res) => {
     if (questions.length < 1)
-      res.status(400).json({ message: 'Question not found' });
-    else res.status(200).json(questions);
+      res.status(400).json({ message: 'No question not found' });
+    res.status(200).json(questions);
   };
 
   static getQuestion = (req, res) => {
     const question = questions.find(
       (q) => q.id === parseInt(req.params.id, 10)
     );
-    if (!question)
-      res.status(400).json({ success: false, errors: 'Question not found' });
+    if (!question) res.status(400).json({ message: 'Question was not found' });
     res.status(200).json(question);
   };
 
@@ -66,7 +65,7 @@ class controller {
       (q) => q.id === parseInt(req.params.id, 10)
     );
     if (!question)
-      res.status(404).json({ message: 'This question doesnt exist ' });
+      res.status(404).json({ message: 'This question doesnt exist' });
     if (question) {
       question.title = title || question.title;
       question.description = description || question.description;
@@ -95,15 +94,18 @@ class controller {
       answer: req.body.answer,
     };
     answers.push(newAnswer);
-    res.status(201).json(answers);
+    res.status(201).json({ message: 'Your answer was successfully submited' });
   };
 
   static getAnswer = (req, res) => {
     const getAnswer = answers.filter(
       (a) => a.questionId === parseInt(req.params.id, 10)
     );
-    if (!getAnswer)
-      res.status(404).send('There is no answer for this question');
+    if (!getAnswer || getAnswer.length < 1) {
+      res
+        .status(404)
+        .json({ message: 'There are no answers for this question' });
+    }
     if (getAnswer) res.status(200).json(getAnswer);
   };
 }
