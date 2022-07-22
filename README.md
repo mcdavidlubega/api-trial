@@ -1,3 +1,5 @@
+[![API TRIAL](https://github.com/mcdavidlubega/api-trial/actions/workflows/api-trial.js.yml/badge.svg)](https://github.com/mcdavidlubega/api-trial/actions/workflows/api-trial.js.yml)
+
 # Stack-Api
 
 A Simple Question Answer API to replicate stackovrflow answer-question api
