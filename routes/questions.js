@@ -1,6 +1,6 @@
-const express = require('express');
-const { celebrate, Joi, Segments } = require('celebrate');
-const controller = require('../controllers/questions');
+import express from 'express';
+import { celebrate, Joi, Segments } from 'celebrate';
+import controller from '../controllers/questions';
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ router.post(
 );
 
 // Update A Question
-router.put(
+router.patch(
   '/:id',
   celebrate({
     [Segments.BODY]: Joi.object().keys({
@@ -45,7 +45,6 @@ router.post(
   '/:id/answers',
   celebrate({
     [Segments.BODY]: Joi.object().keys({
-      questionId: Joi.number().required(),
       answer: Joi.string().min(5).required(),
     }),
   }),
@@ -55,4 +54,4 @@ router.post(
 // Getting a specific answer
 router.get('/:id/answers/', controller.getAnswer);
 
-module.exports = router;
+export default router;

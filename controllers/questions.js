@@ -36,7 +36,7 @@ const answers = [
 class controller {
   static getQuestions = (req, res) => {
     if (questions.length < 1)
-      res.status(404).json({ message: 'Question not found' });
+      res.status(400).json({ message: 'Question not found' });
     else res.status(200).json(questions);
   };
 
@@ -45,8 +45,8 @@ class controller {
       (q) => q.id === parseInt(req.params.id, 10)
     );
     if (!question)
-      res.status(400).json({ message: 'This quesiton does not exist' });
-    res.json(question);
+      res.status(400).json({ success: false, errors: 'Question not found' });
+    res.status(200).json(question);
   };
 
   static postQuestion = (req, res) => {
@@ -66,7 +66,7 @@ class controller {
       (q) => q.id === parseInt(req.params.id, 10)
     );
     if (!question)
-      res.status(400).json({ message: 'This question doesnt exist ' });
+      res.status(404).json({ message: 'This question doesnt exist ' });
     if (question) {
       question.title = title || question.title;
       question.description = description || question.description;
@@ -78,8 +78,8 @@ class controller {
     const indexOfQuestion = questions.findIndex(
       (q) => q.id === parseInt(req.params.id, 10)
     );
-    if (!indexOfQuestion)
-      res.status(400).json({ message: 'Question not found' });
+    if (indexOfQuestion === -1)
+      res.status(404).json({ message: 'Question not found' });
     if (indexOfQuestion) {
       questions.splice(indexOfQuestion, 1);
       res.status(201).json({ message: 'Question deleted' });
@@ -88,9 +88,10 @@ class controller {
 
   static postAnswer = (req, res) => {
     // const { questionId, answer } = req.body;
+
     const newAnswer = {
       id: answers.length + 1,
-      questionId: req.body.questionId,
+      questionId: parseInt(req.params.id, 10),
       answer: req.body.answer,
     };
     answers.push(newAnswer);
@@ -102,9 +103,9 @@ class controller {
       (a) => a.questionId === parseInt(req.params.id, 10)
     );
     if (!getAnswer)
-      res.status(400).json({ message: 'There is no answer for this question' });
-    if (getAnswer) res.status(201).json(getAnswer);
+      res.status(404).send('There is no answer for this question');
+    if (getAnswer) res.status(200).json(getAnswer);
   };
 }
 
-module.exports = controller;
+export default controller;
