@@ -15,6 +15,7 @@ describe('questions routes', () => {
     expect(res.body[0].title).toEqual('Question 1');
   });
 
+  //   Figure out how to test for no questions. Will be resolved when we add database
   //   test('if there are no questions', async () => {
   //     const res = await request(app).get('/api/v1/questions');
   //     expect(res.status).toBe(400);
