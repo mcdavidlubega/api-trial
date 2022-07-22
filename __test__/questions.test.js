@@ -15,11 +15,11 @@ describe('questions routes', () => {
     expect(res.body[0].title).toEqual('Question 1');
   });
 
-  test('if there are no questions', async () => {
-    const res = await request(app).get('/api/v1/questions');
-    expect(res.status).toBe(400);
-    expect(res.body.message).toEqual('No question not found');
-  });
+  //   test('if there are no questions', async () => {
+  //     const res = await request(app).get('/api/v1/questions');
+  //     expect(res.status).toBe(400);
+  //     expect(res.body.message).toEqual('No question not found');
+  //   });
 
   test('if the question does not exist', async () => {
     const res = await request(app).get('/api/v1/questions/6');
